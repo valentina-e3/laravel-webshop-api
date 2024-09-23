@@ -15,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
             return new PriceResolutionService();
         });
 
+        $this->app->singleton(PriceModifierService::class, function ($app) {
+            return new PriceModifierService();
+        });
     }
 
     /**
