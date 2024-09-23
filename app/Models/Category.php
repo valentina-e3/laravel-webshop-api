@@ -26,4 +26,19 @@ class Category extends Model
         return $this->belongsToMany(Product::class, 'category_product');
     }
 
+    /**
+     * Recursively retrieve all IDs of the current category and its subcategories.
+     *
+     * @return array An array of IDs for the current category and its subcategories.
+     */
+    public function getAllSubcategoryIds(): array
+    {
+        $ids = [$this->id];
+
+        foreach ($this->subcategories as $subcategory) {
+            $ids = array_merge($ids, $subcategory->getAllSubcategoryIds());
+        }
+
+        return $ids;
+    }
 }
