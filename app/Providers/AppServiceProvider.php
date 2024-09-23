@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\OrderService;
+use App\Services\PriceModifierService;
+use App\Services\PriceResolutionService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +20,13 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(PriceModifierService::class, function ($app) {
             return new PriceModifierService();
+        });
+
+        $this->app->singleton(OrderService::class, function ($app) {
+            return new OrderService(
+                $app->make(PriceResolutionService::class),
+                $app->make(PriceModifierService::class)
+            );
         });
     }
 
