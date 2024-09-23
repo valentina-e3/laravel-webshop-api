@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(PriceResolutionService::class, function ($app) {
+            return new PriceResolutionService();
+        });
+
     }
 
     /**
